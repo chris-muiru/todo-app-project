@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends "todo_app/base.html" %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load  static%}
+    {% block title %}
+       <title>Index page</title> 
+    {% endblock title %}
+<body>
+    {% block header %}
+       <h2 id="header">Slinger todo app</h2> 
+    {% endblock header %}
+    {% block content %}
+      <div class="content">
+        <div class="task">
+            <h3>Task</h3>
+            <img src="{%static 'todo_app/imgs/task1.png'%}" alt="task image">
+            <button class="task-button" id="show-form">click me to create task</button>
+        </div>    
+        <div id="form-div" class="form-task">
+                <form action="" method="POST" class="data-form">
+                    {%csrf_token%}
+                    {{form}}
+                    <input type="submit" id="btn-submit" value="Submit">
+                </form>
+        </div>
+        
+        <div class="database-content">
+                {% for data in list%}
+                        <div class="database-details">
+                            <div class="div-content">
+                                <p>Task: &nbsp;{{data.task_name}}</p>
+                                <p>Start: &nbsp;{{data.start_date}}</p>
+                                <p>Finish:&nbsp; {{data.finish_date}}</p>
+                            </div>
+                            <form action="/del/{{data.id}}" method="POST">
+                                {% csrf_token %}
+                                <button class="delete-icon" type="submit"><span class='material-icons'>delete</span></button>
+                            </form>
+                        </div>
+                    {%endfor%}
+            </div> 
+    </div>
+   <script src="{%static 'todo_app/js/styles.js'%}"></script>
+    {% endblock content %}
+</body>
+</html>
